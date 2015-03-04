@@ -1,3 +1,31 @@
 // Place all the styles related to the welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+$blue: #3bbfce;
+$black: #000000;
+$white: #FFFFFF;
+$orange-dark: #999900;
+$orange-light: #CCCC00;
+
+
+body {
+  background-color: $black; 
+  color: $blue;
+  font-family: arial;
+}
+
+h1 {
+  text-align: center;
+}
+
+a {
+  color: $orange-light; 
+  &:visited {
+    color: $orange-dark;
+  }
+  &:hover {
+    color: $white;
+  }
+
+}
