@@ -5,13 +5,13 @@
 $blue: #3bbfce;
 $black: #000000;
 $white: #FFFFFF;
-$orange-dark: #999900;
+$orange-dark: #BB7722;
 $orange-light: #CCCC00;
 
 
 body {
   background-color: $black; 
-  color: $blue;
+  color: $orange-dark;
   font-family: arial;
 }
 
@@ -20,9 +20,9 @@ h1 {
 }
 
 a {
-  color: $orange-light; 
+  color: $blue; 
   &:visited {
-    color: $orange-dark;
+    color: $orange-light;
   }
   &:hover {
     color: $white;
