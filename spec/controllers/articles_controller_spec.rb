@@ -14,4 +14,17 @@ describe ArticlesController do
       expect(response).to render_template :index
     end
   end
+
+  describe "GET #show" do
+    it "assigns the requested article to @article" do
+      article = FactoryGirl.create(:article)
+      get :show, id: article
+      expect(assigns(:article)).to eq(article)
+    end
+    
+    it "renders the show view" do
+      get :show, id: FactoryGirl.create(:article)
+      expect(response).to render_template :show
+    end
+  end
 end
