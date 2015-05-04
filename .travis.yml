@@ -6,4 +6,4 @@ script:
 
 before_script:
   - psql -c "CREATE USER loria WITH PASSWORD 'l0r1A';" -U postgres
-  - psql -c 'create database loria' -U loria 
+  - psql -c 'create database loria' -U postgres 
