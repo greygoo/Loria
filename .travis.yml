@@ -1,4 +1,4 @@
 language: ruby
 
 script:
-  - rake db:test:prepare
+  - bundle exec rake db:test:prepare
