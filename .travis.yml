@@ -1,4 +1,4 @@
 language: ruby
 
 script:
-rake db:test:prepare
+  - rake db:test:prepare
