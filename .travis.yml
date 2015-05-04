@@ -2,3 +2,6 @@ language: ruby
 
 script:
   - bundle exec rake db:test:prepare
+
+before_script:
+  - psql -c 'create database loria' -U postgres
