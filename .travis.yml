@@ -5,4 +5,5 @@ script:
   - bundle exec rake db:test:prepare
 
 before_script:
+  - psql -c "CREATE USER loria WITH PASSWORD 'l0r1A';" -U postgres
   - psql -c 'create database loria' -U loria 
