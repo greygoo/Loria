@@ -3,7 +3,7 @@ FactoryGirl.define do
     f.title "Hello World"
   end
 
-  factory :invalid_article, parent: :contact do |f|
+  factory :invalid_article, parent: :article do |f|
     f.title nil
   end
 end

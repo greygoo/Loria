@@ -34,7 +34,7 @@ describe ArticlesController do
       it "does not create an article" do
         expect{
           post :create, article: FactoryGirl.attributes_for(:article)
-        }.to change(Article, :count).by(0)
+        }.to_not change(Article, :count)
       end 
 
       it "responds with 401 unauthorized" do
@@ -47,16 +47,31 @@ describe ArticlesController do
       before(:each) do
         admin_login
       end
+  
+      context "with valid attributes" do
+        it "creates an article" do
+          expect{
+            post :create, article: FactoryGirl.attributes_for(:article)
+          }.to change(Article, :count).by(1)
+        end
 
-      it "creates an article" do
-        expect{
+        it "redirects to the created article" do
           post :create, article: FactoryGirl.attributes_for(:article)
-        }.to change(Article, :count).by(1)
+          expect(response).to redirect_to Article.last
+        end
       end
 
-      it "redirects to the created article" do
-        post :create, article: FactoryGirl.attributes_for(:article)
-        expect(response).to redirect_to Article.last
+      context "with invalid attributes" do
+        it "does not save the new article" do
+          expect{
+            post :create, article: FactoryGirl.attributes_for(:invalid_article)
+          }.to_not change(Article,:count)
+        end
+
+        it "re-renders the new method" do
+          post :create, article: FactoryGirl.attributes_for(:invalid_article)
+          expect(response).to render_template :new
+        end
       end
     end
   end
