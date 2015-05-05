@@ -1,5 +1,5 @@
 Rails.application.configure do
-  config.log_level = :alert
+  config.log_level = :warn 
 
   # Settings specified here will take precedence over those in config/application.rb.
 
