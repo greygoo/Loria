@@ -86,4 +86,5 @@ RSpec.configure do |config|
 =end
 
 require "capybara/rspec"
+require "support/auth_helper.rb"
 end

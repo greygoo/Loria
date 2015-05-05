@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'spec_helper'
+include AuthHelper
 
 describe ArticlesController do
   describe "GET #index" do
@@ -39,6 +40,18 @@ describe ArticlesController do
       it "responds with 401 unauthorized" do
         post :create, article: FactoryGirl.attributes_for(:article)
         expect(response.response_code).to eq 401
+      end
+    end
+
+    context "with authentication" do
+      before(:each) do
+        admin_login
+      end
+
+      it "creates an article" do
+        expect{
+          post :create, article: FactoryGirl.attributes_for(:article)
+        }.to change(Article, :count).by(1)
       end
     end
   end
