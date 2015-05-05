@@ -1,5 +1,5 @@
 Rails.application.configure do
-  config.log_level = :debug
+  config.log_level = :info
 
   # Settings specified here will take precedence over those in config/application.rb.
 
