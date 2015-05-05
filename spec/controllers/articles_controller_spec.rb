@@ -53,6 +53,11 @@ describe ArticlesController do
           post :create, article: FactoryGirl.attributes_for(:article)
         }.to change(Article, :count).by(1)
       end
+
+      it "redirects to the created article" do
+        post :create, article: FactoryGirl.attributes_for(:article)
+        expect(response).to redirect_to Article.last
+      end
     end
   end
 end
