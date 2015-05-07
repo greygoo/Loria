@@ -42,8 +42,6 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     @article.destroy
 
-    puts 'dindong'
-
     redirect_to articles_path
   end
 
