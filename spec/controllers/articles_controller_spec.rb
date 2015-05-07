@@ -97,7 +97,7 @@ describe ArticlesController do
           expect(@article.text).to eq "Hello World again"
         end
  
-        it "redircets to the updated article" do
+        it "redirects to the updated article" do
           put :update, id: @article, article: FactoryGirl.attributes_for(:article)
           expect(response).to redirect_to @article
         end
@@ -121,6 +121,22 @@ describe ArticlesController do
           put :update, id: @article, article: FactoryGirl.attributes_for(:invalid_article)
           expect(response).to render_template(:edit)
         end
+      end
+    end
+
+    context "without authentication" do
+      before :each do
+        @article = FactoryGirl.create(:article, title: "Testarticle updated", text: "Hello World again")
+      end
+
+      it "does not locate the requested @article" do
+        put :update, id: @article, article: FactoryGirl.attributes_for(:article)
+        expect(assigns(:article)).to eq(nil)
+      end
+
+      it "responds with 401 unauthorized" do
+        put :update, id: @article, article: FactoryGirl.attributes_for(:article)
+        expect(response.response_code).to eq 401
       end
     end
   end
