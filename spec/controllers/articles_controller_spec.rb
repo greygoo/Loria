@@ -177,4 +177,45 @@ describe ArticlesController do
       end
     end
   end
+
+  describe "DELETE destroy_all" do
+    before :each do
+        @article1 = FactoryGirl.create(:article, title: "Delete me please1", text: "This will be gone soon1")
+        @article2 = FactoryGirl.create(:article, title: "Delete me please2", text: "This will be gone soon2")
+        @article3 = FactoryGirl.create(:article, title: "Delete me please3", text: "This will be gone soon")
+    end
+
+    context "with authentication" do
+      before :each do
+        admin_login
+      end
+
+      it "deletes all articles" do
+        expect{
+          delete :destroy_all
+        }.to change(Article, :count).to(0)
+      end
+
+      it "redirects to articles@index" do
+        delete :destroy_all
+        expect(response).to redirect_to articles_url
+      end
+    end
+
+    context "without authentication" do
+      it "deletes no articles" do
+        expect{
+          delete :destroy_all
+        }.not_to change(Article, :count)
+
+      end
+
+      it "responses with 401 unauthorized" do
+        delete :destroy_all
+        expect(response.response_code).to eq 401
+      end
+    end
+
+
+  end
 end
