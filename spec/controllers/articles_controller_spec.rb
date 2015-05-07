@@ -78,7 +78,6 @@ describe ArticlesController do
 
   describe 'PUT update' do
     context "with authentication" do
-      
       before :each do
         admin_login
         @article = FactoryGirl.create(:article, title: "Testarticle updated", text: "Hello World again")
@@ -96,6 +95,31 @@ describe ArticlesController do
           @article.reload
           expect(@article.title).to eq "Testarticle updated"
           expect(@article.text).to eq "Hello World again"
+        end
+ 
+        it "redircets to the updated article" do
+          put :update, id: @article, article: FactoryGirl.attributes_for(:article)
+          expect(response).to redirect_to @article
+        end
+      end
+
+      context "invalid attributes" do
+        it "locates the requested @article" do
+          put :update, id: @article, article: FactoryGirl.attributes_for(:invalid_article)
+          expect(assigns(:article)).to eq(@article)
+        end
+
+        it "does not change the @article's attributes" do
+          put :update, id: @article,
+            article: FactoryGirl.attributes_for(:article, title: nil, test: "Hello World again")
+          @article.reload
+          expect(@article.title).to eq("Testarticle updated")
+          expect(@article.text).to eq("Hello World again")
+        end
+
+        it "re-renders the edit method" do
+          put :update, id: @article, article: FactoryGirl.attributes_for(:invalid_article)
+          expect(response).to render_template(:edit)
         end
       end
     end
