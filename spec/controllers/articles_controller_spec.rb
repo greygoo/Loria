@@ -140,4 +140,41 @@ describe ArticlesController do
       end
     end
   end
+
+  describe "DELETE destroy" do
+    context "with authentication" do
+      before :each do
+        admin_login
+        @article = FactoryGirl.create(:article, title: "Delete me please", text: "This will be gone soon")
+      end
+
+      it "deletes the contact" do
+        expect{
+          delete :destroy, id: @article
+        }.to change(Article, :count).by(-1)
+      end
+
+      it "redirects to articles@index" do
+        delete :destroy, id: @article
+        expect(response).to redirect_to articles_url 
+      end
+    end
+  
+    context "without authentication" do
+      before :each do
+        @article = FactoryGirl.create(:article, title: "Delete me please", text: "This will be gone soon")
+      end
+
+      it "does not delete the requested article" do
+        expect{
+          delete :destroy, id: @article
+        }.to_not change(Article, :count)
+      end
+
+      it "responds with 401 unauthorized" do
+        delete :destroy, id: @article
+        expect(response.response_code).to eq 401
+      end
+    end
+  end
 end
