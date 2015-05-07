@@ -75,4 +75,29 @@ describe ArticlesController do
       end
     end
   end
+
+  describe 'PUT update' do
+    context "with authentication" do
+      
+      before :each do
+        admin_login
+        @article = FactoryGirl.create(:article, title: "Testarticle updated", text: "Hello World again")
+      end
+
+      context "valid attributes" do
+        it "located the requested @article" do
+          put :update, id: @article, article: FactoryGirl.attributes_for(:article)
+          expect(assigns(:article)).to eq(@article)
+        end
+
+        it "changes @article's attributes" do
+          put :update, id: @article,
+            article: FactoryGirl.attributes_for(:article, title: "Testarticle updated", text: "Hello World again")
+          @article.reload
+          expect(@article.title).to eq "Testarticle updated"
+          expect(@article.text).to eq "Hello World again"
+        end
+      end
+    end
+  end
 end
